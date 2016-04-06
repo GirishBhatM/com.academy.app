@@ -1,5 +1,7 @@
 package com.academy.app.controller
 
+import grails.converters.JSON
+
 import com.academy.app.domain.Slot
 import com.academy.app.domain.TimeType
 
@@ -37,8 +39,28 @@ class SlotController extends BaseController{
 			render "Slot with above specification already exists...!!!"
 			return
 		}else{
-			slot.save()
+			slot.save(flush:true)
 			render "Slot successfully created...!!!"
+			return
+		}
+	}
+
+	def list(){
+		render view:"list",model:[model:Slot.list()]
+	}
+
+	def delete(){
+		Slot slot=Slot.load(new Long(params.slotID))
+		try{
+			if(slot?.id){
+				slot.delete(flush:true)
+				render "Slot deleted successfully..!!!.View slot again for the update"
+				return
+			}else{
+				render "Slot doesn't exists...!!!"
+			}
+		}catch(Exception e){
+			render "Unable to delete the Slot.Please check the slot association with Players...!!"
 			return
 		}
 	}

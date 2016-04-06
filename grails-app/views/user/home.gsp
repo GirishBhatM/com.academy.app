@@ -40,14 +40,17 @@
 			<!--/.container-fluid -->
 		</nav>
 		<!-- Main component for a primary marketing message or call to action -->
-		<div id="content"></div>
+		<div id="content">
+			<br>
+		</div>
 		<hr></hr>
 		<footer class="footer">
-			<p>&copy; 2015 Company, Inc.</p>
+			<p>Add footer here</p>
 		</footer>
 	</div>
 	<div id="spinner" class="spinner">
-		<g:img uri="${resource(dir: "images", file: "spinner.gif")}" alt="Loading..." />
+		<g:img uri="${resource(dir: "images", file: "spinner.gif")}"
+			alt="Loading..." />
 	</div>
 	<!-- Site footer -->
 	<!-- /container -->
