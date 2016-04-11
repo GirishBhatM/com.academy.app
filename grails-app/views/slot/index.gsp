@@ -7,12 +7,13 @@
 					onloading="showSpinner(true);" update="slotContent">
 								Add Slot
 							</g:remoteLink></li>
-			<li id="slotCreate"><g:remoteLink action="list" id="slotaView"
+			<li id="slotView"><g:remoteLink action="list" id="slotaView"
 					controller="slot" update="slotContent">
 								View Slots
 							</g:remoteLink></li>
 		</ul>
-		<div id="slotContent"></div>
+		<div id="slotContent">
+		</div>
 	</nav>
 </div>
 

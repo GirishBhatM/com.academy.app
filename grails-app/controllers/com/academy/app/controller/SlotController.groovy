@@ -54,7 +54,7 @@ class SlotController extends BaseController{
 		try{
 			if(slot?.id){
 				slot.delete(flush:true)
-				render "Slot deleted successfully..!!!.View slot again for the update"
+				render "Deleted"
 				return
 			}else{
 				render "Slot doesn't exists...!!!"
@@ -62,6 +62,40 @@ class SlotController extends BaseController{
 		}catch(Exception e){
 			render "Unable to delete the Slot.Please check the slot association with Players...!!"
 			return
+		}
+	}
+
+	def edit(){
+		Slot slot=Slot.load(new Long(params.slotID))
+		render view:"edit",model:[slot:slot]
+	}
+
+	def update(){
+		Slot slot=Slot.load(new Long(params.slotID))
+		if(slot?.id){
+			slot.startTime=params.sh+':'+params.sm
+			slot.sType=TimeType.valueOf(params.st)
+			slot.eType=TimeType.valueOf(params.et)
+			slot.endTime=params.eh+':'+params.em
+			Slot exist=Slot.withCriteria {
+				eq("startTime",slot.startTime)
+				eq("endTime",slot.endTime)
+				eq("sType",slot.sType)
+				eq("eType",slot.eType)
+			}.find()
+
+			if(exist){
+				render "Slot with above specification already exists...!!!"
+				return
+			}else{
+				slot.save(flush:true)
+				if(slot.hasErrors()){
+					render "Please correct the errors...!!!"
+					return
+				}
+				render "Slot successfully updated...!!!"
+				return
+			}
 		}
 	}
 }

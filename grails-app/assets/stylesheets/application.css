@@ -11,6 +11,8 @@
 *= require mobile
 *= require_self
 *= require bootstrap 
+*= require bootsrap-datepicker.min
+*= require bootsrap-datepicker-min3
 *= require app
 *= require signin
 *= require navbar

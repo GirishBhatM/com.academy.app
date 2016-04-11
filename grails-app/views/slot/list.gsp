@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<table class="table" id="table">
+<%@page import="com.academy.app.domain.TimeType"%>
+<br>
+<div id="message"></div>
+<table class="table" id="slotListTable">
 	<thead>
 		<tr>
 			<th>Start Time</th>
@@ -11,24 +14,18 @@
 	<tbody>
 		<g:each in="${model}" var="slot">
 			<tr>
-				<td>
-					${slot.startTime}:${slot.sType}
+				<td id="#slotStart">
+					${slot.startTime+" "+slot.sType}
 				</td>
-				<td>
-					${slot.endTime }:${slot.eType}
+				<td id="slotEnd">
+					${slot.endTime+" "+slot.eType }
 				</td>
-				<td><g:form action="update">
-						<g:hiddenField name="slotID" value="${slot.id }" />
-						<g:submitToRemote value="Edit" controller="slot" action="update"
-							class="btn btn-primary" update="message" />
-					</g:form></td>
-				<td><g:form action="delete">
-						<g:hiddenField name="slotID" value="${slot.id }" />
-						<g:submitToRemote value="Delete" controller="slot" action="delete"
-							class="btn btn-primary" update="message" />
-					</g:form></td>
+				<td><input type="button" class="btn btn-primary" name="${slot.id }"
+					value="Edit" id="slotEdit"></td>
+				<td><input type="button" value="Delete" name="${slot.id }"
+					id="slotDelete" class="btn btn-primary"></td>
 			</tr>
 		</g:each>
 	</tbody>
+
 </table>
-<div id="message"></div>

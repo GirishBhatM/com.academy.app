@@ -1,6 +1,9 @@
 package com.academy.app.domain
 
+import groovy.transform.ToString
 
+
+@ToString(excludes="sType,eType,metaClass,class")
 class Slot {
 	String startTime
 	String endTime

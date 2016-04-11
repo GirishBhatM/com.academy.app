@@ -11,6 +11,8 @@
 //= require_self
 //= require bootsrap
 //= require bootstrap.min
+//= require bootsrap-datepicker.min
+
 if (typeof jQuery !== 'undefined') {
 	(function($) {
 		$('#spinner').ajaxStart(function() {

@@ -22,8 +22,10 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li><g:link action="index" controller="user" id="user">Player</g:link></li>
-						<li><g:link action="index" controller="course" id="course">Course</g:link></li>
+						<li><g:remoteLink action="index" controller="student" id="user"
+								update="content">Player</g:remoteLink></li>
+						<li><g:remoteLink action="index" controller="course"
+								id="course" update="content">Course</g:remoteLink></li>
 						<li><g:remoteLink action="index" id="slot" controller="slot"
 								update="content">
 								Slot

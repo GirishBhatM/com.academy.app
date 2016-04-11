@@ -1,6 +1,6 @@
 <%@page import="com.academy.app.domain.TimeType"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
-
+<br>
 <g:form class="form-horizontal">
 	<div class="form-group">
 		<label class="control-label col-xs-2">Start Time:</label>
