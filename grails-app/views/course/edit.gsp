@@ -36,4 +36,6 @@
 		</div>
 	</div>
 </g:form>
-<div id="message"></div>
+<div class="alert alert-info" id="message">
+<strong>Message:</strong>
+</div>

@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@page import="com.academy.app.domain.TimeType"%>
 <br>
-<div id="message"></div>
+<div class="alert alert-info" id="message">
+<strong>Message:</strong>
+</div>
 <div class="table-responsive table-hover"> 
 <table class="table" id="slotListTable">
 	<thead>
