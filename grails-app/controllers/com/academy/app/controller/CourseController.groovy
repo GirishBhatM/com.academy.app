@@ -1,6 +1,6 @@
 package com.academy.app.controller
 
-import com.academy.app.domain.Course;
+import com.academy.app.domain.Course
 
 class CourseController extends BaseController{
 
@@ -30,7 +30,7 @@ class CourseController extends BaseController{
 	}
 
 	def list(){
-		render view:"list",model:[model:Course.list()]
+		render view:"list",model:[model:Course.list(max:10,offset:0,sort:"title")]
 	}
 
 	def edit(){
@@ -63,4 +63,5 @@ class CourseController extends BaseController{
 		}
 		render "Course doesn't exists..!!!"
 	}
+	
 }

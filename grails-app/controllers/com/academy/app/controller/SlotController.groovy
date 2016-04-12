@@ -46,7 +46,7 @@ class SlotController extends BaseController{
 	}
 
 	def list(){
-		render view:"list",model:[model:Slot.list()]
+		render view:"list",model:[model:Slot.list(max:10,offset:0,sort:"startTime")]
 	}
 
 	def delete(){

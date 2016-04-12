@@ -13,6 +13,11 @@
 			<th>Delete</th>
 		</tr>
 	</thead>
+	<tfoot>
+		<tr>
+			<td><g:link action="export" controller="student">Export</g:link></td>
+		</tr>
+	</tfoot>
 	<tbody>
 		<g:each in="${model}" var="student">
 			<tr>
@@ -28,7 +33,9 @@
 				<td>
 					${student.slot.startTime+" "+student.slot.endTime}
 				</td>
-				<td>${student.feePaid}
+				<td>
+					${student.feePaid}
+				
 				<td><input type="button" class="btn btn-primary"
 					name="${student.id }" value="Edit" id="studentEdit"></td>
 				<td><input type="button" value="Delete" name="${student.id }"

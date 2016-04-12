@@ -2,8 +2,10 @@ package com.academy.app.controller
 
 
 
-import java.text.DateFormat
-import java.text.SimpleDateFormat
+import org.apache.poi.hssf.usermodel.HSSFSheet
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
+import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.Row
 
 import com.academy.app.domain.Course
 import com.academy.app.domain.Level
@@ -48,7 +50,7 @@ class StudentController extends BaseController{
 	}
 
 	def list(){
-		List studentList=Student.list()
+		List studentList=Student.list(max:10,offset:0,sort:"name")
 		render view:"list",model:[model:studentList]
 	}
 
@@ -89,6 +91,50 @@ class StudentController extends BaseController{
 			}
 		}else{
 			render "Please provide valid data...!!!"
+		}
+	}
+
+	def export(){
+		response.setContentType('application/application/excel')
+		response.setHeader("Content-disposition", "attachment; filename=Student_List.xls")
+		List studentList=Student.list()
+		HSSFWorkbook workBook=new HSSFWorkbook()
+		HSSFSheet sheet=workBook.createSheet("Student List")
+		int rowNum=0
+		Row header=sheet.createRow(rowNum++)
+		Cell nameH=header.createCell(0)
+		nameH.setCellValue("Student Name")
+		Cell schoolNameH=header.createCell(1)
+		schoolNameH.setCellValue("School Name")
+		Cell dobH=header.createCell(2)
+		dobH.setCellValue("Date pf Birth(mm/dd/yyy)")
+		Cell courseNameH=header.createCell(3)
+		courseNameH.setCellValue("Course Title")
+		Cell slotH=header.createCell(4)
+		slotH.setCellValue("Slot")
+		Cell feeH=header.createCell(5)
+		feeH.setCellValue("Fee Paid")
+		studentList?.each {
+			Row row=sheet.createRow(rowNum++)
+			Cell name=row.createCell(0)
+			name.setCellValue(it.name)
+			Cell schoolName=row.createCell(1)
+			schoolName.setCellValue(it.schoolName)
+			Cell dob=row.createCell(2)
+			dob.setCellValue(it.dateOfBirth)
+			Cell courseName=row.createCell(3)
+			courseName.setCellValue(it.course.title)
+			Cell slot=row.createCell(4)
+			slot.setCellValue(it.slot.startTime+" "+it.slot.sType+"-"+it.slot.endTime+" "+it.slot.eType)
+			Cell fee=row.createCell(5)
+			fee.setCellValue(it.feePaid.toString())
+		}
+		try{
+			workBook.write(response.outputStream)
+		}catch(IOException e){
+			render "Error occured"
+		}finally{
+			response.outputStream.close()
 		}
 	}
 }

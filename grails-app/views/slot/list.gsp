@@ -20,12 +20,12 @@
 				<td id="slotEnd">
 					${slot.endTime+" "+slot.eType }
 				</td>
-				<td><input type="button" class="btn btn-primary" name="${slot.id }"
-					value="Edit" id="slotEdit"></td>
+				<td><input type="button" class="btn btn-primary"
+					name="${slot.id }" value="Edit" id="slotEdit"></td>
 				<td><input type="button" value="Delete" name="${slot.id }"
 					id="slotDelete" class="btn btn-primary"></td>
 			</tr>
 		</g:each>
 	</tbody>
-
 </table>
+
