@@ -19,6 +19,13 @@
 			</div>
 		</div>
 	</div>
+	<div class="panel-group">
+		<div class="panel panel-default">
+			<div class="panel-heading">Number of Students Per Course
+				Registered</div>
+			<div class="panel-body" id="stPCourse"></div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -65,5 +72,16 @@
 				$("#amount").append(response);
 			}
 		});
+		$.ajax({
+			type : "POST",
+			url : "/com.academy.app/dashBoard/usersPerCourse",
+			async : true,
+			cache : false,
+			success : function(response) {
+				$("#stPCourse").empty();
+				$("#stPCourse").append(response);
+			}
+		});
+
 	}
 </script>
