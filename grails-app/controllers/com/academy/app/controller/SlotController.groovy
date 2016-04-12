@@ -46,7 +46,20 @@ class SlotController extends BaseController{
 	}
 
 	def list(){
-		render view:"list",model:[model:Slot.list(max:10,offset:0,sort:"startTime")]
+		int offset=params.offset==null?0:Integer.parseInt(params.offset)
+		int nextOffset=offset
+		if("previous".equals(params.type)){
+			if(offset>0){
+				nextOffset-=5
+			}
+		}else if("next".equals(params.type)){
+			if(offset<Slot.count()-1){
+				nextOffset+=5
+				offset=nextOffset
+			}
+		}
+		List slots=Slot.list(max:5,offset:offset,sort:"startTime")
+		render view:"list",model:[model:slots,offset:nextOffset]
 	}
 
 	def delete(){

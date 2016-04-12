@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <br>
 <div id="message"></div>
+<div class="table-responsive table-hover">
 <table class="table" id="studentListTable">
 	<thead>
 		<tr>
@@ -43,5 +44,11 @@
 			</tr>
 		</g:each>
 	</tbody>
-
 </table>
+</div>
+<ul class="pager">
+	<li><a id="previous">&lt;</a></li>
+	<li><a id="next">&gt;</a></li>
+	<g:hiddenField name="offset" value="${offset }" />
+	<g:hiddenField name="controller" value="student" />
+</ul>

@@ -2,6 +2,7 @@
 <%@page import="com.academy.app.domain.TimeType"%>
 <br>
 <div id="message"></div>
+<div class="table-responsive table-hover"> 
 <table class="table" id="slotListTable">
 	<thead>
 		<tr>
@@ -28,4 +29,10 @@
 		</g:each>
 	</tbody>
 </table>
-
+</div>
+<ul class="pager">
+	<li><a id="previous">&lt;</a></li>
+	<li><a id="next">&gt;</a></li>
+	<g:hiddenField name="offset" value="${offset }" />
+	<g:hiddenField name="controller" value="slot" />
+</ul>

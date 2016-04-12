@@ -30,7 +30,20 @@ class CourseController extends BaseController{
 	}
 
 	def list(){
-		render view:"list",model:[model:Course.list(max:10,offset:0,sort:"title")]
+		int offset=params.offset==null?0:Integer.parseInt(params.offset)
+		int nextOffset=offset
+		if("previous".equals(params.type)){
+			if(offset>0){
+				nextOffset-=5
+			}
+		}else if("next".equals(params.type)){
+			if(offset<Slot.count()-1){
+				nextOffset+=5
+				offset=nextOffset
+			}
+		}
+		List courses=Course.list(max:5,offset:offset,sort:"title")
+		render view:"list",model:[model:courses,offset:nextOffset]
 	}
 
 	def edit(){

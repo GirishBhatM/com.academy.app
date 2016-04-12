@@ -50,8 +50,20 @@ class StudentController extends BaseController{
 	}
 
 	def list(){
-		List studentList=Student.list(max:10,offset:0,sort:"name")
-		render view:"list",model:[model:studentList]
+		int offset=params.offset==null?0:Integer.parseInt(params.offset)
+		int nextOffset=offset
+		if("previous".equals(params.type)){
+			if(offset>0){
+				nextOffset-=5
+			}
+		}else if("next".equals(params.type)){
+			if(offset<Slot.count()-1){
+				nextOffset+=5
+				offset=nextOffset
+			}
+		}
+		List students=Student.list(max:5,offset:offset,sort:"name")
+		render view:"list",model:[model:students,offset:nextOffset]
 	}
 
 	def delete(){
@@ -97,7 +109,7 @@ class StudentController extends BaseController{
 	def export(){
 		response.setContentType('application/application/excel')
 		response.setHeader("Content-disposition", "attachment; filename=Student_List.xls")
-		List studentList=Student.list()
+		List studentList=Student.list(sort:"name")
 		HSSFWorkbook workBook=new HSSFWorkbook()
 		HSSFSheet sheet=workBook.createSheet("Student List")
 		int rowNum=0
