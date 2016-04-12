@@ -133,7 +133,8 @@ $(document).ready(
 					function() {
 						$.ajax({
 							type : "POST",
-							url : "/com.academy.app/" + "student/edit?studentID="
+							url : "/com.academy.app/"
+									+ "student/edit?studentID="
 									+ $(this).attr("name"),
 							sync : true,
 							cache : false,
@@ -146,34 +147,43 @@ $(document).ready(
 							}
 						});
 					});
-			$(document).on("click","#previous",function(){
-				var controller=$("#controller").val();
-				var offset=$("#offset").val();
-				$.ajax({
-					type:"POST",
-					url:"/com.academy.app/"+controller+"/list?offset="+offset+"&type=previous",
-					sync:true,
-					cache:false,
-					success:function(response){
-						var id="#"+controller+"Content"
-						$(id).empty();
-						$(id).append(response);
-					}
-				});
-			});
-			$(document).on("click","#next",function(){
-				var controller=$("#controller").val();
-				var offset=$("#offset").val();
-				$.ajax({
-					type:"POST",
-					url:"/com.academy.app/"+controller+"/list?offset="+offset+"&type=next",
-					sync:true,
-					cache:false,
-					success:function(response){
-						var id="#"+controller+"Content"
-						$(id).empty();
-						$(id).append(response);
-					}
-				});
-			});
+			$(document).on(
+					"click",
+					"#previous",
+					function() {
+						var controller = $("#controller").val();
+						var offset = $("#offset").val();
+						$.ajax({
+							type : "POST",
+							url : "/com.academy.app/" + controller
+									+ "/list?offset=" + offset
+									+ "&type=previous",
+							sync : true,
+							cache : false,
+							success : function(response) {
+								var id = "#" + controller + "Content"
+								$(id).empty();
+								$(id).append(response);
+							}
+						});
+					});
+			$(document).on(
+					"click",
+					"#next",
+					function() {
+						var controller = $("#controller").val();
+						var offset = $("#offset").val();
+						$.ajax({
+							type : "POST",
+							url : "/com.academy.app/" + controller
+									+ "/list?offset=" + offset + "&type=next",
+							sync : true,
+							cache : false,
+							success : function(response) {
+								var id = "#" + controller + "Content"
+								$(id).empty();
+								$(id).append(response);
+							}
+						});
+					});
 		});

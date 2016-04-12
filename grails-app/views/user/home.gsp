@@ -22,8 +22,8 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li><g:remoteLink action="index" controller="student" id="user"
-								update="content">Player</g:remoteLink></li>
+						<li><g:remoteLink action="index" controller="student"
+								id="user" update="content">Player</g:remoteLink></li>
 						<li><g:remoteLink action="index" controller="course"
 								id="course" update="content">Course</g:remoteLink></li>
 						<li><g:remoteLink action="index" id="slot" controller="slot"
@@ -32,8 +32,8 @@
 							</g:remoteLink></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><g:link action="index" controller="dashBoard"
-								id="dashBoard">Dash Board</g:link></li>
+						<li><g:remoteLink action="index" controller="dashBoard"
+								update="content" id="dashBoard">Dash Board</g:remoteLink></li>
 						<li><g:link action="logout" controller="user" id="logout">Logout</g:link></li>
 					</ul>
 				</div>

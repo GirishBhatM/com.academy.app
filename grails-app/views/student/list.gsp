@@ -1,52 +1,54 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <br>
 <div class="alert alert-info" id="message">
-<strong>Message:</strong>
+	<strong>Message:</strong>
 </div>
 <div class="table-responsive table-hover">
-<table class="table" id="studentListTable">
-	<thead>
-		<tr>
-			<th>Student Name</th>
-			<th>School Name</th>
-			<th>Course</th>
-			<th>Slot</th>
-			<th>Fee Paid</th>
-			<th>Edit</th>
-			<th>Delete</th>
-		</tr>
-	</thead>
-	<tfoot>
-		<tr>
-			<td><g:link action="export" controller="student">Export</g:link></td>
-		</tr>
-	</tfoot>
-	<tbody>
-		<g:each in="${model}" var="student">
+	<table class="table" id="studentListTable">
+		<thead>
 			<tr>
-				<td>
-					${student.name}
-				</td>
-				<td>
-					${student.schoolName}
-				</td>
-				<td>
-					${student.course.title}
-				</td>
-				<td>
-					${student.slot.startTime+" "+student.slot.endTime}
-				</td>
-				<td>
-					${student.feePaid}
-				
-				<td><input type="button" class="btn btn-primary"
-					name="${student.id }" value="Edit" id="studentEdit"></td>
-				<td><input type="button" value="Delete" name="${student.id }"
-					id="studentDelete" class="btn btn-primary"></td>
+				<th>Student Name</th>
+				<th>School Name</th>
+				<th>Course</th>
+				<th>Slot</th>
+				<th>Fee Paid</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
-		</g:each>
-	</tbody>
-</table>
+		</thead>
+		<tfoot>
+			<tr>
+				<td><g:link action="export" controller="student">
+						<span class="glyphicon glyphicon-download">Export</span>
+					</g:link></td>
+			</tr>
+		</tfoot>
+		<tbody>
+			<g:each in="${model}" var="student">
+				<tr>
+					<td>
+						${student.name}
+					</td>
+					<td>
+						${student.schoolName}
+					</td>
+					<td>
+						${student.course.title}
+					</td>
+					<td>
+						${student.slot.startTime+" "+student.slot.endTime}
+					</td>
+					<td>
+						${student.feePaid}
+					
+					<td><input type="button" class="btn btn-primary"
+						name="${student.id }" value="Edit" id="studentEdit"></td>
+					<td><input type="button" value="Delete" name="${student.id }"
+						id="studentDelete" class="btn btn-primary"></td>
+				</tr>
+			</g:each>
+		</tbody>
+	</table>
 </div>
 <ul class="pager">
 	<li><a id="previous">&lt;</a></li>
