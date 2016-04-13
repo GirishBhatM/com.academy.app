@@ -1,29 +1,31 @@
 <%@page import="com.academy.app.domain.Slot"%>
 <%@page import="com.academy.app.domain.Course"%>
 <%@page import="com.academy.app.domain.Level"%>
+<%@page import="com.academy.app.domain.Day"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <br>
-<g:form class="form-horizontal">
+<g:form class="form-horizontal" id="studentSaveForm">
+<g:hiddenField name="studentID" value="${student.id }"/>
 	<div class="form-group">
-	<g:hiddenField name="studentID" value="${student.id}"/>
 		<label class="control-label col-xs-2">Name</label>
 		<div class="col-xs-10">
 			<input type="text" name="studentName" maxlength="250"
-				required="required" readonly="readonly" value="${student.name}">
+				required="required" id="studentName" value="${student.name }">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-xs-2">School Name</label>
 		<div class="col-xs-10">
 			<input type="text" name="schoolName" maxlength="250"
-				required="required" value="${student.schoolName}">
+				required="required" id="schoolName" value="${student.schoolName }">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-xs-2">Date Of Birth(mm/dd/yyy)</label>
 		<div class="col-xs-5 date">
 			<div class="input-group input-append date" id="datepicker">
-				<input type="text" class="form-control" name="date" value="${student.dateOfBirth}"/> <span
+				<input type="text" class="form-control" name="date" id="dob"
+					value="${student.dateOfBirth }"> <span
 					class="input-group-addon add-on"><span
 					class="glyphicon glyphicon-calendar"></span></span>
 				<script>
@@ -35,37 +37,66 @@
 	<div class="form-group">
 		<label class="control-label col-xs-2">Level</label>
 		<div class="col-xs-10">
-			<g:select name="level" from="${Level.values() }" value="${student.level.toString()}"/>
+			<g:select name="level" from="${Level.values() }" id="levelSelect"
+				value="${student.level.toString() }" />
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-xs-2">Select Course</label>
 		<div class="col-xs-10">
 			<g:select name="course" from="${courses}"
-				optionValue="${titleAndfee}" optionKey="id" value="${student.course.toString()}"/>
+				optionValue="${titleAndfee}" optionKey="id" id="courseSelect"
+				value="${student.course?.toString() }" />
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-xs-2">Select Slot</label>
-		<div class="col-xs-10">
-			<g:select name="slot" from="${slots}"
-				optionValue="${startTimeAndendTime}" optionKey="id" value="${student.slot.toString()}"/>
+		<div class="col-xs-10" id="slotSelectDiv">
+			<g:select name="day" from="${Day.values() }" id="slotDaySelect" />
+			<select name="slot" class="slotSelect" id="slotSelect"></select> <input
+				type="button" value="Add" name="Add" id="add"
+				class="btn btn-primary slotSelect">
+		</div>
+	</div>
+	<div class="table-responsive table-hover form-group">
+		<label class="control-label col-xs-2"></label>
+		<div class="col-xs-10" id="slotSelectDiv">
+			<table class="table" id="selectedSlotTable">
+				<thead>
+					<tr>
+						<th>Day</th>
+						<th>Slot</th>
+						<th>Remove</th>
+					</tr>
+				</thead>
+				<tbody>
+					<g:each in="${student.slot}" var="slotDay">
+						<tr>
+							<td>${slotDay.day}</td>
+							<td>${slotDay.slot?.toString() }</td>
+							<td id="${slotDay.slot?.id }"><input type="button"
+								value="Remove" name="Remove" class="btn btn-primary removeSlot"></td>
+						</tr>
+					</g:each>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-xs-2">Fee paid</label>
 		<div class="col-xs-10">
-			<input type="text" name="fee" required="required" value="${student.feePaid}">
+			<input type="text" name="fee" required="required" id="fee"
+				value="${student.feePaid }">
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-xs-offset-2 col-xs-10">
-			<g:submitToRemote value="Update" controller="student" action="update"
-				class="btn btn-primary" update="message" />
+			<input type="button" class="btn btn-primary saveUser" id="studentSaveButton"
+				value="Update" name="Update" />
 		</div>
+		<g:hiddenField name="action" value="update" id="action"/>
 	</div>
-
 </g:form>
 <div class="alert alert-info" id="message">
-<strong>Message:</strong>
+	<strong>Message:</strong>
 </div>

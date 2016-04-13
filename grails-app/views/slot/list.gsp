@@ -10,6 +10,7 @@
 		<tr>
 			<th>Start Time</th>
 			<th>End Time</th>
+			<th>Days</th>
 			<th>Edit</th>
 			<th>Delete</th>
 		</tr>
@@ -17,11 +18,17 @@
 	<tbody>
 		<g:each in="${model}" var="slot">
 			<tr>
-				<td id="#slotStart">
+				<td id="slotStart">
 					${slot.startTime+" "+slot.sType}
 				</td>
 				<td id="slotEnd">
 					${slot.endTime+" "+slot.eType }
+				</td>
+				<td id="slotDays">
+				<g:each in="${slot.days}" var="day">
+				   ${day }
+				</g:each>
+				
 				</td>
 				<td><input type="button" class="btn btn-primary"
 					name="${slot.id }" value="Edit" id="slotEdit"></td>

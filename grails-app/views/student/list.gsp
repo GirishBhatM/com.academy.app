@@ -10,7 +10,6 @@
 				<th>Student Name</th>
 				<th>School Name</th>
 				<th>Course</th>
-				<th>Slot</th>
 				<th>Fee Paid</th>
 				<th>Edit</th>
 				<th>Delete</th>
@@ -36,11 +35,8 @@
 						${student.course.title}
 					</td>
 					<td>
-						${student.slot.startTime+" "+student.slot.endTime}
-					</td>
-					<td>
 						${student.feePaid}
-					
+					</td>
 					<td><input type="button" class="btn btn-primary"
 						name="${student.id }" value="Edit" id="studentEdit"></td>
 					<td><input type="button" value="Delete" name="${student.id }"

@@ -1,7 +1,6 @@
 package com.academy.app.controller
 
-import grails.converters.JSON
-
+import com.academy.app.domain.Day
 import com.academy.app.domain.Slot
 import com.academy.app.domain.TimeType
 
@@ -24,24 +23,27 @@ class SlotController extends BaseController{
 		String tempS=start+" "+params.st
 		String tempE=end+" "+params.et
 		if(tempS.equals(tempE)){
-			render "Unable to create slot..!!!"
+			render "Unable to create slot.Start and end time are same..!!!"
 			return
 		}
-
-		Slot exist=Slot.withCriteria {
-			eq("startTime",start)
-			eq("endTime",end)
-			eq("sType",sType)
-			eq("eType",eType)
-		}.find()
-
-		if(exist){
-			render "Slot with above specification already exists...!!!"
+		if(!params.days){
+			render "Unable to create slot.Please select atleast one day..!!!"
 			return
+		}
+		List days=[]
+		if(params.days instanceof  String){
+			days<<Day.valueOf(params.days)
 		}else{
-			slot.save(flush:true)
+			params.days.each{
+				days<<Day.valueOf(it)
+			}
+		}
+		slot.days=days
+		if(slot.save(flush:true)){
 			render "Slot successfully created...!!!"
 			return
+		}else{
+			render "Unable to create slot.Provide all details...!!!"
 		}
 	}
 
@@ -90,25 +92,26 @@ class SlotController extends BaseController{
 			slot.sType=TimeType.valueOf(params.st)
 			slot.eType=TimeType.valueOf(params.et)
 			slot.endTime=params.eh+':'+params.em
-			Slot exist=Slot.withCriteria {
-				eq("startTime",slot.startTime)
-				eq("endTime",slot.endTime)
-				eq("sType",slot.sType)
-				eq("eType",slot.eType)
-			}.find()
-
-			if(exist){
-				render "Slot with above specification already exists...!!!"
-				return
-			}else{
-				slot.save(flush:true)
-				if(slot.hasErrors()){
-					render "Please correct the errors...!!!"
-					return
-				}
-				render "Slot successfully updated...!!!"
+			if(!params.days){
+				render "Unable to create slot.Please select atleast one day..!!!"
 				return
 			}
+			List days=[]
+			if(params.days instanceof  String){
+				days<<Day.valueOf(params.days)
+			}else{
+				params.days.each{
+					days<<Day.valueOf(it)
+				}
+			}
+			slot.days=days
+			slot.save(flush:true)
+			if(slot.hasErrors()){
+				render "Please correct the errors...!!!"
+				return
+			}
+			render "Slot successfully updated...!!!"
+			return
 		}
 	}
 }

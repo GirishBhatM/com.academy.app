@@ -1,4 +1,5 @@
 <%@page import="com.academy.app.domain.TimeType"%>
+<%@page import="com.academy.app.domain.Day"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <br>
 <g:form class="form-horizontal">
@@ -19,11 +20,21 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label class="control-label col-xs-2">Days:</label>
+		<div class="col-xs-10">
+			<g:each in="${Day.values()}" var="day">
+				<label for="${day}"> ${day}</label>
+				<g:checkBox name="days" value="${day}" checked="false"/>
+			</g:each>
+		</div>
+	</div>
+	<div class="form-group">
 		<div class="col-xs-offset-2 col-xs-10">
-			<g:submitToRemote  value="Save"  controller="slot" action="save" class="btn btn-primary" update="message"/>
+			<g:submitToRemote value="Save" controller="slot" action="save"
+				class="btn btn-primary" update="message" />
 		</div>
 	</div>
 </g:form>
 <div class="alert alert-info" id="message">
-<strong>Message:</strong>
+	<strong>Message:</strong>
 </div>

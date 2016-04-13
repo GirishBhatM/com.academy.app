@@ -9,10 +9,13 @@ class Slot {
 	String endTime
 	TimeType sType
 	TimeType eType
+	List<Day> days=[]
+	static hasMany = [days:Day]
 	static constraints = {
 		startTime blank:false
 		endTime blank:false
 		sType nullable:false
 		eType nullable:false
+		days unique:false,nullable:false,minSize:1
 	}
 }

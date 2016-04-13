@@ -4,6 +4,7 @@ import org.hibernate.annotations.FetchMode
 
 import com.academy.app.QueryDump;
 import com.academy.app.domain.Course
+import com.academy.app.domain.Day;
 import com.academy.app.domain.Slot
 import com.academy.app.domain.Student
 
@@ -51,5 +52,10 @@ class DashBoardController {
 			toReturn<<queryDump
 		}
 		render view:'list_user_per_course',model:[model:toReturn]
+	}
+
+	def slotsPerDay(){
+		Day day=Day.valueOf(params.day)
+		render view:"slot_list_per_day",model:[model: Slot.findAll("from Slot s where :days in elements(s.days)", [days:day.name])]
 	}
 }

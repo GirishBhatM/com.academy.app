@@ -1,6 +1,7 @@
 package com.academy.app.controller
 
 import com.academy.app.domain.Course
+import com.academy.app.domain.Slot
 
 class CourseController extends BaseController{
 
@@ -37,12 +38,13 @@ class CourseController extends BaseController{
 				nextOffset-=5
 			}
 		}else if("next".equals(params.type)){
-			if(offset<Slot.count()-1){
+			if(offset<Course.count()-1){
 				nextOffset+=5
 				offset=nextOffset
 			}
 		}
 		List courses=Course.list(max:5,offset:offset,sort:"title")
+		println offset
 		render view:"list",model:[model:courses,offset:nextOffset]
 	}
 
@@ -76,5 +78,4 @@ class CourseController extends BaseController{
 		}
 		render "Course doesn't exists..!!!"
 	}
-	
 }
