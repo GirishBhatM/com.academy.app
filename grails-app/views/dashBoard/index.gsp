@@ -21,6 +21,12 @@
 	</div>
 	<div class="panel-group">
 		<div class="panel panel-default">
+			<div class="panel-heading">Students with due</div>
+			<div class="panel-body" id="stDue"></div>
+		</div>
+	</div>
+	<div class="panel-group">
+		<div class="panel panel-default">
 			<div class="panel-heading">Number of Students Per Course
 				Registered</div>
 			<div class="panel-body" id="stPCourse"></div>
@@ -80,6 +86,16 @@
 			success : function(response) {
 				$("#stPCourse").empty();
 				$("#stPCourse").append(response);
+			}
+		});
+		$.ajax({
+			type : "POST",
+			url : "/com.academy.app/dashBoard/studentsWithDue",
+			async : true,
+			cache : false,
+			success : function(response) {
+				$("#stDue").empty();
+				$("#stDue").append(response);
 			}
 		});
 

@@ -118,6 +118,7 @@ class StudentController extends BaseController{
 		student.feePaid=new BigDecimal(jsonData.fee)
 		student.level=Level.valueOf(jsonData.level)
 		List slots=jsonData.slots
+		student.slot.clear()
 		if(slots.isEmpty()){
 			render 'Please select atleast one slot..!!!'
 			return
