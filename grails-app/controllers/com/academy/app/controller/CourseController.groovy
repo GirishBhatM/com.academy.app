@@ -24,7 +24,6 @@ class CourseController extends BaseController{
 			course.save(flush:true)
 			render 'Course created successfully...!!!'
 		}else if(course.hasErrors()){
-			course.errors.each { println it }
 			render 'Please correct all the fields'
 			return
 		}
@@ -44,7 +43,6 @@ class CourseController extends BaseController{
 			}
 		}
 		List courses=Course.list(max:5,offset:offset,sort:"title")
-		println offset
 		render view:"list",model:[model:courses,offset:nextOffset]
 	}
 

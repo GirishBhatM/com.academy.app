@@ -15,7 +15,7 @@ environments {
     }
     test {
         dataSource {
-            dbCreate = "update"
+            dbCreate = "create"
              url = "jdbc:mysql://localhost/app?useUnicode=yes&characterEncoding=UTF-8"
         }
     }

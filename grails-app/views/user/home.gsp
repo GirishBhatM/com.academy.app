@@ -47,7 +47,7 @@
 		</div>
 		<hr></hr>
 		<footer class="footer">
-			<p>Add footer here</p>
+			
 		</footer>
 	</div>
 	<div id="spinner" class="spinner">

@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <br>
 <g:form class="form-horizontal" id="studentSaveForm">
-<g:hiddenField name="studentID" value="${student.id }"/>
+	<g:hiddenField name="studentID" value="${student.id }" />
 	<div class="form-group">
 		<label class="control-label col-xs-2">Name</label>
 		<div class="col-xs-10">
@@ -32,6 +32,25 @@
 					$('#datepicker').datepicker();
 				</script>
 			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-xs-2">Phone Number</label>
+		<div class="col-xs-10">
+			<input type="text" name="phoneNum" maxlength="10" id="phoneNum"
+				value="${student.phoneNumber}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-xs-2">Photo</label>
+		<div class="col-xs-10">
+			<div>
+				<img id="preview"
+					src="${createLink(controller:'student', action:'picture', params:[studentID:student.id])}"
+					class="img-responsive" width="304" height="236" />
+			</div>
+			<input type="file" value="Browse" name="Browse" id="imageBrowsebtn"
+				class="btn btn-primary" accept="image/*" name="picImage">
 		</div>
 	</div>
 	<div class="form-group">
@@ -72,8 +91,12 @@
 				<tbody>
 					<g:each in="${student.slot}" var="slotDay">
 						<tr>
-							<td>${slotDay.day}</td>
-							<td>${slotDay.slot?.toString() }</td>
+							<td>
+								${slotDay.day}
+							</td>
+							<td>
+								${slotDay.slot?.toString() }
+							</td>
 							<td id="${slotDay.slot?.id }"><input type="button"
 								value="Remove" name="Remove" class="btn btn-primary removeSlot"></td>
 						</tr>
@@ -91,10 +114,10 @@
 	</div>
 	<div class="form-group">
 		<div class="col-xs-offset-2 col-xs-10">
-			<input type="button" class="btn btn-primary saveUser" id="studentSaveButton"
-				value="Update" name="Update" />
+			<input type="button" class="btn btn-primary saveUser"
+				id="studentSaveButton" value="Update" name="Update" />
 		</div>
-		<g:hiddenField name="action" value="update" id="action"/>
+		<g:hiddenField name="action" value="update" id="action" />
 	</div>
 </g:form>
 <div class="alert alert-info" id="message">

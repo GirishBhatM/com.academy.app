@@ -4,6 +4,7 @@ import com.academy.app.QueryDump
 import com.academy.app.domain.Course
 import com.academy.app.domain.Day
 import com.academy.app.domain.Slot
+import com.academy.app.domain.SlotDay
 import com.academy.app.domain.Student
 
 class DashBoardController {
@@ -27,7 +28,7 @@ class DashBoardController {
 		BigDecimal amount=criteria.list {
 			projections { sum("feePaid") }
 		}.first()
-		render amount
+		render amount==null?0:amount
 	}
 
 	def usersPerCourse(){
@@ -68,7 +69,17 @@ class DashBoardController {
 			queryDump.difference=queryDump.fee-queryDump.feePaid
 			toReturn<<queryDump
 		}
-		println toReturn
 		render view:"due",model:[model:toReturn]
+	}
+
+	def listStudentsPerSlot(){
+
+		List students = Student.createCriteria().list(){
+			slot {
+				eq('day', Day.valueOf(params.day))
+				eq('slot.id',new Long(params.slotID))
+			}
+		}
+		render view:'search',model:[model:students]
 	}
 }

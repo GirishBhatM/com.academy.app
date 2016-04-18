@@ -33,6 +33,22 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label class="control-label col-xs-2">Phone Number</label>
+		<div class="col-xs-10">
+			<input type="text" name="phoneNum" maxlength="10" id="phoneNum">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-xs-2">Photo</label>
+		<div class="col-xs-10">
+			<div>
+				<img id="preview" src="" class="img-responsive" width="304" height="236"/>
+			</div>
+			<input type="file" value="Browse" name="Browse" id="imageBrowsebtn"
+				class="btn btn-primary" accept="image/*" name="picImage">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="control-label col-xs-2">Level</label>
 		<div class="col-xs-10">
 			<g:select name="level" from="${Level.values() }" id="levelSelect" />
@@ -78,10 +94,10 @@
 	</div>
 	<div class="form-group">
 		<div class="col-xs-offset-2 col-xs-10">
-			<input type="button" class="btn btn-primary saveUser" id="studentSaveButton"
-				value="Save" name="Save" />
+			<input type="button" class="btn btn-primary saveUser"
+				id="studentSaveButton" value="Save" name="Save" />
 		</div>
-		<g:hiddenField name="action" value="save" id="action"/>
+		<g:hiddenField name="action" value="save" id="action" />
 	</div>
 </g:form>
 <div class="alert alert-info" id="message">

@@ -4,12 +4,16 @@ package com.academy.app.controller
 
 import grails.converters.JSON
 
+import java.awt.image.BufferedImage
 import java.text.SimpleDateFormat
+
+import javax.imageio.ImageIO
 
 import org.apache.poi.hssf.usermodel.HSSFSheet
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
+import org.springframework.web.multipart.MultipartFile
 
 import com.academy.app.domain.Course
 import com.academy.app.domain.Day
@@ -33,24 +37,27 @@ class StudentController extends BaseController{
 
 	def save(){
 		Student student=new Student()
-		def jsonData=JSON.parse(params.jsonData)
-		Course course=Course.get(new Long(jsonData.course))
+		Course course=Course.get(new Long(params.course))
 		student.course=course
-		student.name=jsonData.studentName
-		student.schoolName=jsonData.schoolName
-		student.dateOfBirth=jsonData.dob
-		student.feePaid=new BigDecimal(jsonData.fee)
-		student.level=Level.valueOf(jsonData.level)
+		student.name=params.studentName
+		student.schoolName=params.schoolName
+		student.dateOfBirth=params.dob
+		student.feePaid=new BigDecimal(params.fee)
+		student.level=Level.valueOf(params.level)
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy")
 		student.courseStartDate=dateFormat.format(new Date())
-		List slots=jsonData.slots
+		student.phoneNumber=params.studentPhone
+		MultipartFile file=(MultipartFile)(params.file)
+		student.picture=file.getBytes()
+		student.extension=file.getOriginalFilename().split("\\.")[1];
+		List slots=JSON.parse(params.slots)
 		if(slots.isEmpty()){
 			render 'Please select atleast one slot..!!!'
 			return
 		}
 		slots.each{
 			Slot slot=Slot.get(it.slotId)
-			SlotDay slotDay=[slot:slot,day:Day.valueOf(it.day)]
+			SlotDay slotDay=[slot:slot,day:Day.valueOf(it.day.trim())]
 			student.slot<<slotDay
 		}
 
@@ -82,7 +89,6 @@ class StudentController extends BaseController{
 			}
 		}
 		List students=Student.list(max:5,offset:offset,sort:"name")
-		println students
 		render view:"list",model:[model:students,offset:nextOffset]
 	}
 
@@ -107,17 +113,23 @@ class StudentController extends BaseController{
 	}
 
 	def update(){
-		def jsonData=JSON.parse(params.jsonData)
-		println jsonData.studentID
-		Student student=Student.load(new Long(jsonData.studentID))
-		Course course=Course.get(new Long(jsonData.course))
+		Student student=Student.load(new Long(params.studentID))
+		Course course=Course.get(new Long(params.course))
 		student.course=course
-		student.name=jsonData.studentName
-		student.schoolName=jsonData.schoolName
-		student.dateOfBirth=jsonData.dob
-		student.feePaid=new BigDecimal(jsonData.fee)
-		student.level=Level.valueOf(jsonData.level)
-		List slots=jsonData.slots
+		student.name=params.studentName
+		student.schoolName=params.schoolName
+		student.dateOfBirth=params.dob
+		student.feePaid=new BigDecimal(params.fee)
+		student.level=Level.valueOf(params.level)
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy")
+		student.courseStartDate=dateFormat.format(new Date())
+		student.phoneNumber=params.studentPhone
+		if(params.file!='undefined'){
+			MultipartFile file=(MultipartFile)(params.file)
+			student.picture=file.getBytes()
+			student.extension=file.getOriginalFilename().split("\\.")[1];
+		}
+		List slots=JSON.parse(params.slots)
 		student.slot.clear()
 		if(slots.isEmpty()){
 			render 'Please select atleast one slot..!!!'
@@ -125,7 +137,7 @@ class StudentController extends BaseController{
 		}
 		slots.each{
 			Slot slot=Slot.get(it.slotId)
-			SlotDay slotDay=[slot:slot,day:Day.valueOf(it.day)]
+			SlotDay slotDay=[slot:slot,day:Day.valueOf(it.day.trim())]
 			student.slot<<slotDay
 		}
 
@@ -176,6 +188,28 @@ class StudentController extends BaseController{
 			render "Error occured"
 		}finally{
 			response.outputStream.close()
+		}
+	}
+
+	def picture(){
+		Student student=Student.load(new Long(params.studentID))
+		File pic=null
+		if(student.picture){
+			String fileSeparator=System.getProperty('file.separator')
+			InputStream ins = new ByteArrayInputStream(student.picture)
+			BufferedImage bImageFromConvert = ImageIO.read(ins)
+			File dir=new File("${System.getProperty('user.home')}${fileSeparator}${student.name.replace(" ","_")}")
+			if(!dir.exists()){
+				dir.mkdir()
+			}
+			pic=new File(
+					"${dir.absolutePath}${fileSeparator}pic.${student.extension}")
+			pic.createNewFile()
+			ImageIO.write(bImageFromConvert,student.extension,pic)
+			response.setHeader('Content-length', pic.getBytes().length.toString())
+			response.contentType = "image/${student.extension}"
+			response.outputStream << pic.getBytes()
+			response.outputStream.flush()
 		}
 	}
 }

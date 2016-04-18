@@ -245,16 +245,17 @@ $(document)
 							"click",
 							".saveUser",
 							function() {
-								var jsonOBJ = {};
-								jsonOBJ.studentName = $("#studentName").val();
-								jsonOBJ.schoolName = $("#schoolName").val();
-								jsonOBJ.course = $("#courseSelect :selected").val();
-								jsonOBJ.level=$("#levelSelect :selected").val();
-								jsonOBJ.dob=$("#dob").val();
-								jsonOBJ.fee = $("#fee").val();
-								jsonOBJ.studentID=$("#studentID").val();
+								var form_data= new FormData();
+								form_data.append("studentName" , $("#studentName").val());
+								form_data.append("schoolName" , $("#schoolName").val());
+								form_data.append("course" ,$("#courseSelect :selected").val());
+								form_data.append("level",$("#levelSelect :selected").val());
+								form_data.append("dob" , $("#dob").val());
+								form_data.append("fee" , $("#fee").val());
+								form_data.append("studentID", $("#studentID").val());
+								form_data.append("studentPhone",$("#phoneNum").val());
 								var slots = []
-								var controller=$("#action").val()
+								var controller = $("#action").val()
 								$("#selectedSlotTable tbody tr").each(
 										function(i, row) {
 											var slot = {}
@@ -264,17 +265,38 @@ $(document)
 													.eq(2).attr("id");
 											slots.push(slot)
 										});
-								jsonOBJ.slots = slots
-								var jsonData = JSON.stringify(jsonOBJ);
+								form_data.append("slots" , JSON.stringify(slots));
+								form_data.append("file",$("#imageBrowsebtn")[0].files[0]);
 								$.ajax({
 									type : "POST",
-									url : "/com.academy.app/student/"+controller,
-									data : {jsonData:jsonData},
+									url : "/com.academy.app/student/"
+											+ controller,
+									data : form_data,
+					                contentType: false,
+					                processData: false,
 									success : function(response) {
 										$("#message").empty();
 										$("#message").append(response);
 									}
 								});
 							});
+
+					$(document)
+							.on(
+									"change",
+									"#imageBrowsebtn",
+									function() {
+										if ($(this)[0].files[0]) {
+											var reader = new FileReader();
+											reader.onload = function(e) {
+												$("#preview").attr(
+														'src', e.target.result);
+											}
+											reader
+													.readAsDataURL($("#imageBrowsebtn")[0].files[0]);
+										} else {
+											preview.attr('src', '');
+										}
+									})
 
 				});

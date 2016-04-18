@@ -1,4 +1,5 @@
 
+<%@page import="com.academy.app.domain.Day"%>
 <div class="body" id="dasbordBody">
 	<div class="panel panel-default">
 		<div class="panel-heading">Dash Board</div>
@@ -27,17 +28,27 @@
 	</div>
 	<div class="panel-group">
 		<div class="panel panel-default">
-			<div class="panel-heading">Number of Students Per Course
-				Registered</div>
-			<div class="panel-body" id="stPCourse"></div>
+			<div class="panel-heading">Search Students</div>
+			<div class="panel-body" id="search">
+				<div class="form-group">
+					<label class="control-label col-xs-2">Select Slot</label>
+					<div class="col-xs-10" id="slotSelectDiv">
+						<g:select name="day" from="${Day.values() }" id="slotDaySelect" />
+						<input type="button" value="Add" name="Add" id="add"
+							class="btn btn-primary slotSelect">
+					</div>
+				</div>
+			</div>
+			<div class="table-responsive table-hover form-group"
+				id="searchTableDiv"></div>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
-		yourFunction();
+		ajaxCalls();
 	});
-	function yourFunction() {
+	function ajaxCalls() {
 		$.ajax({
 			type : "POST",
 			url : "/com.academy.app/dashBoard/totalStudentsCount",
@@ -98,6 +109,27 @@
 				$("#stDue").append(response);
 			}
 		});
+		$(document)
+				.on(
+						"click",
+						'#add',
+						function() {
+							var day = $("#slotDaySelect :selected").val();
+							var slot = $("#slotSelect :selected").val();
+							$
+									.ajax({
+										type : "POST",
+										url : "/com.academy.app/dashBoard/listStudentsPerSlot?day="
+												+ day + "&slotID=" + slot,
+										async : false,
+										cache : false,
+										success : function(response) {
+											$("#searchTableDiv").empty();
+											$("#searchTableDiv").append(
+													response);
+										}
+									});
+						});
 
 	}
 </script>
