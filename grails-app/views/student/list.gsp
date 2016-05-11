@@ -13,6 +13,7 @@
 				<th>Fee Paid</th>
 				<th>Edit</th>
 				<th>Delete</th>
+				<th>Fee Unit</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -41,6 +42,8 @@
 						name="${student.id }" value="Edit" id="studentEdit"></td>
 					<td><input type="button" value="Delete" name="${student.id }"
 						id="studentDelete" class="btn btn-primary"></td>
+					<td><input type="button" value="Fee Unit"
+						name="${student.id }" id="studentFeeUnit" class="btn btn-primary"></td>
 				</tr>
 			</g:each>
 		</tbody>

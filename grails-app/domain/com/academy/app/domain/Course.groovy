@@ -13,6 +13,10 @@ class Course {
 		description blank:false,nullable:true,maxLength:250
 		duration nullable:false,blank:false,min:1
 		fee blank:false,min:100.0,scale:2
+	}
+	@Override
+	public String toString() {
+		return "title=" + title + ", duration= " + duration + ", fee= "+ fee ;
 	}
 	
 	

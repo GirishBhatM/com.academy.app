@@ -191,6 +191,30 @@ $(document)
 									}
 								});
 							});
+					
+					
+					$(document).on(
+							"click",
+							"#studentFeeUnit",
+							function() {
+								$.ajax({
+									type : "POST",
+									url : "/com.academy.app/"
+											+ "fee?studentId="
+											+ $(this).attr("name"),
+									sync : true,
+									cache : false,
+									success : function(response) {
+										$("#content").empty();
+										$("#content").append(response);
+									},
+									failure : function(response) {
+										alert("Error occured");
+									}
+								});
+							});
+					
+					
 
 					$(document)
 							.on(

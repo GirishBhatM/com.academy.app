@@ -13,7 +13,8 @@ class Student {
 	List<SlotDay> slot=[]
 	BigDecimal feePaid
 	String extension
-	static hasMany =[slot:SlotDay]
+	List<FeeUnit> feeUnits=[]
+	static hasMany =[slot:SlotDay,feeUnits:FeeUnit]
 	static constraints = {
 		name blank:false ,nullbale:false,unique:true,maxLength:250
 		schoolName blank:false ,nullable:false,maxLength:250
@@ -21,11 +22,12 @@ class Student {
 		level nullable:false
 		course blank:false
 		slot blank:false,minSize:1
+		feeUnits blank:false,minSize:1
 		feePaid blank:false,min:new BigDecimal(0)
 		courseStartDate blank:false,nullable:false
 		phoneNumber blank:true,nullable:true
 		picture nullable:true,blank:true
-		extension nullable:true 
+		extension nullable:true
 	}
 
 	static mapping = { picture sqlType: 'mediumblob' }

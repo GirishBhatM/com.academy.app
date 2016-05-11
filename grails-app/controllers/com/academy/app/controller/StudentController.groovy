@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile
 
 import com.academy.app.domain.Course
 import com.academy.app.domain.Day
+import com.academy.app.domain.FeeUnit;
 import com.academy.app.domain.Level
 import com.academy.app.domain.Slot
 import com.academy.app.domain.SlotDay
@@ -46,6 +47,8 @@ class StudentController extends BaseController{
 		student.level=Level.valueOf(params.level)
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy")
 		student.courseStartDate=dateFormat.format(new Date())
+		FeeUnit feeunit=[feepaid:student.feePaid,date:student.courseStartDate]
+		student.feeUnits.add(feeunit)
 		student.phoneNumber=params.studentPhone
 		MultipartFile file=(MultipartFile)(params.file)
 		student.picture=file.getBytes()
@@ -119,10 +122,15 @@ class StudentController extends BaseController{
 		student.name=params.studentName
 		student.schoolName=params.schoolName
 		student.dateOfBirth=params.dob
-		student.feePaid=new BigDecimal(params.fee)
+		BigDecimal currentpaind=new BigDecimal(params.fee)
+		double diff=currentpaind.minus(student.feePaid)
+		if(diff>0){
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy")
+			FeeUnit feeunit=[feepaid:diff,date:dateFormat.format(new Date())]
+			student.feeUnits.add(feeunit)
+		}
+		student.feePaid=currentpaind
 		student.level=Level.valueOf(params.level)
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy")
-		student.courseStartDate=dateFormat.format(new Date())
 		student.phoneNumber=params.studentPhone
 		if(params.file!='undefined'){
 			MultipartFile file=(MultipartFile)(params.file)

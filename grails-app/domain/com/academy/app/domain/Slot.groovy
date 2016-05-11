@@ -17,5 +17,9 @@ class Slot {
 		sType nullable:false
 		eType nullable:false
 		days unique:false,nullable:false,minSize:1
+	}
+	@Override
+	public String toString() {
+		return startTime +" "+sType+ " to "  + endTime+" "+eType + " "+days;
 	}
 }

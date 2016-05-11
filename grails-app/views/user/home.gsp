@@ -23,18 +23,20 @@
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li><g:remoteLink action="index" controller="student"
-								id="user" update="content">Player</g:remoteLink></li>
+								id="user" update="content" data-toggle="tooltip" title="Click">Player</g:remoteLink></li>
 						<li><g:remoteLink action="index" controller="course"
-								id="course" update="content">Course</g:remoteLink></li>
+								id="course" update="content" data-toggle="tooltip" title="Click">Course</g:remoteLink></li>
 						<li><g:remoteLink action="index" id="slot" controller="slot"
-								update="content">
+								update="content" data-toggle="tooltip" title="Click">
 								Slot
 							</g:remoteLink></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><g:remoteLink action="index" controller="dashBoard"
-								update="content" id="dashBoard">Dash Board</g:remoteLink></li>
-						<li><g:link action="logout" controller="user" id="logout">Logout</g:link></li>
+								update="content" id="dashBoard" data-toggle="tooltip"
+								title="Click">Dash Board</g:remoteLink></li>
+						<li><g:link action="logout" controller="user" id="logout"
+								data-toggle="tooltip" title="Logout">Logout</g:link></li>
 					</ul>
 				</div>
 				<!--/.nav-collapse -->
@@ -46,9 +48,7 @@
 			<br>
 		</div>
 		<hr></hr>
-		<footer class="footer">
-			
-		</footer>
+		<footer class="footer"> </footer>
 	</div>
 	<div id="spinner" class="spinner">
 		<g:img uri="${resource(dir: "images", file: "spinner.gif")}"

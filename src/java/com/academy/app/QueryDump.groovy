@@ -7,4 +7,5 @@ class QueryDump {
 	BigDecimal fee
 	BigDecimal feePaid
 	BigDecimal difference
+	String date
 }
